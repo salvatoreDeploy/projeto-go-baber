@@ -20,10 +20,10 @@ export const Title = styled.Text`
   margin: 64px 0 24px;
 `;
 
-export const Icon = styled(Ionicons) <ContainerProps>`
+/* export const Icon = styled(Ionicons) <ContainerProps>`
   margin-right: 16px;
   ${props => props.isFocused && css`border-color: #ff9000`}
-`;
+`; */
 
 export const BackToSignIn = styled.TouchableOpacity`
   position: absolute;

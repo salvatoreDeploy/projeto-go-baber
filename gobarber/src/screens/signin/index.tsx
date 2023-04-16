@@ -5,6 +5,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
@@ -23,14 +24,51 @@ import {
 
 import logoImg from "../../assets/Logo.png";
 import { FormHandles } from "@unform/core";
+import * as Yup from "yup";
+import getValidationError from "../../utils/getValidationError";
+
+interface SignInFomData {
+  email: string;
+  password: string;
+}
 
 export function SignIn() {
   const { navigate } = useNavigation();
 
   const formRef = useRef<FormHandles>(null);
 
-  const handleSignIn = useCallback((data: object) => {
-    console.log(data);
+  const handleSingIn = useCallback(async (data: SignInFomData) => {
+    try {
+      formRef.current?.setErrors({});
+
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .required("E-mail é obrigatorio")
+          .email("Digite um e-mail válido"),
+        password: Yup.string().required("Senha obrigatoria"),
+      });
+
+      await schema.validate(data, { abortEarly: false });
+
+      /* await signIn({
+          email: data.email,
+          password: data.password,
+        }); */
+
+      // navigate("/dashboard");
+    } catch (err: any) {
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationError(err);
+        formRef.current?.setErrors(errors);
+
+        return;
+      }
+
+      Alert.alert(
+        "Erro na autenticação",
+        "Ocorreu um erro ao fazer login, cheque as credenciais"
+      );
+    }
   }, []);
 
   return (
@@ -49,13 +87,14 @@ export function SignIn() {
             <View>
               <Title>Faça seu Login</Title>
             </View>
-            <Form ref={formRef} onSubmit={handleSignIn}>
-              <Input name="email" placeholder="E-mail">
-                <Icon name="mail" size={20} color="#666360" />
-              </Input>
-              <Input name="password" placeholder="Password">
-                <Icon name="lock" size={20} color="#666360" />
-              </Input>
+            <Form ref={formRef} onSubmit={handleSingIn}>
+              <Input name="email" placeholder="E-mail" icon="mail" />
+              <Input
+                secureTextEntry={true}
+                name="password"
+                placeholder="Password"
+                icon="lock"
+              />
               <Button
                 onPress={() => {
                   formRef.current?.submitForm();

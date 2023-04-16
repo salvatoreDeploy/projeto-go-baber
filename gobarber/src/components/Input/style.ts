@@ -1,8 +1,10 @@
 import { css } from "styled-components";
 import styled from "styled-components/native";
+import FatherIcon from "react-native-vector-icons/Feather";
 
 interface ContainerProps {
   isFocused: boolean;
+  isErrored: boolean
 }
 
 export const Container = styled.View<ContainerProps>`
@@ -18,7 +20,16 @@ export const Container = styled.View<ContainerProps>`
   flex-direction: row;
   align-items: center;
 
+  margin-right: 16px;
+
+  ${props => props.isErrored && css`border-color: #c53030`}
+
   ${props => props.isFocused && css`border-color: #ff9000`}
+`;
+
+export const Icon = styled(FatherIcon)`
+  margin-right: 16px;
+  
 `;
 
 export const TextInput = styled.TextInput`

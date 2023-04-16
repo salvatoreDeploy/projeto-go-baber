@@ -1,30 +1,67 @@
-import React, { useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import {
   Image,
   View,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 
-import {
-  Container,
-  Title,
-  Icon,
-  BackToSignIn,
-  BackToSignInText,
-} from "./style";
+import { Container, Title, BackToSignIn, BackToSignInText } from "./style";
+import Icon from "react-native-vector-icons/Feather";
 
 import logoImg from "../../assets/Logo.png";
 import { useNavigation } from "@react-navigation/native";
 import { Form } from "@unform/mobile";
 import { FormHandles } from "@unform/core";
+import * as Yup from "yup";
+import getValidationError from "../../utils/getValidationError";
+
+interface SignUpFormData {
+  name: string;
+  email: string;
+  password: string;
+}
 
 export function SignUp() {
   const { goBack } = useNavigation();
   const formRef = useRef<FormHandles>(null);
+
+  const handleSignUp = useCallback(async (data: SignUpFormData) => {
+    //console.log(data);
+
+    try {
+      formRef.current?.setErrors({});
+
+      const schema = Yup.object().shape({
+        name: Yup.string().required("Nome é Obrigatorio"),
+        email: Yup.string()
+          .required("E-mail é obrigatorio")
+          .email("Digite um e-mail válido"),
+        password: Yup.string().min(6, "Minimo 6 digitos"),
+      });
+
+      await schema.validate(data, { abortEarly: false });
+
+      // await api.post("users/createuser", data);
+
+      // navigate("/");
+    } catch (err: any) {
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationError(err);
+        formRef.current?.setErrors(errors);
+
+        return;
+      }
+      Alert.alert(
+        "Cadastro Realizado com sucesso",
+        "Você ja pode realziar seu logon no GoBarber"
+      );
+    }
+  }, []);
 
   return (
     <>
@@ -42,21 +79,15 @@ export function SignUp() {
             <View>
               <Title>Crie sua Conta</Title>
             </View>
-            <Form
-              ref={formRef}
-              onSubmit={(data) => {
-                console.log(data);
-              }}
-            >
-              <Input name="name" placeholder="Nome">
-                <Icon name="user" size={20} color="#666360" />
-              </Input>
-              <Input name="email" placeholder="E-mail">
-                <Icon name="mail" size={20} color="#666360" />
-              </Input>
-              <Input name="password" placeholder="Password">
-                <Icon name="lock" size={20} color="#666360" />
-              </Input>
+            <Form ref={formRef} onSubmit={handleSignUp}>
+              <Input name="name" placeholder="Nome" icon="user" />
+              <Input name="email" placeholder="E-mail" icon="mail" />
+              <Input
+                secureTextEntry={true}
+                name="password"
+                placeholder="Password"
+                icon="lock"
+              />
               <Button
                 onPress={() => {
                   formRef.current?.submitForm();

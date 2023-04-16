@@ -1,19 +1,18 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { TextInputProps } from "react-native";
-import { Container, TextInput } from "./style";
+import { Container, TextInput, Icon } from "./style";
 import { useField } from "@unform/core";
-import { Icon } from "react-native-vector-icons/Icon";
 
 interface InputProps extends TextInputProps {
   name: string;
-  children: React.ReactNode;
+  icon: string;
 }
 
 interface InputValueReferenece {
   value: string;
 }
 
-export function Input({ name, children, ...props }: InputProps) {
+export function Input({ name, icon, ...props }: InputProps) {
   const inputElementRef = useRef<any>(null);
   const { registerField, defaultValue = "", fieldName, error } = useField(name);
   const inputValueRef = useRef<InputValueReferenece>({ value: defaultValue });
@@ -47,7 +46,12 @@ export function Input({ name, children, ...props }: InputProps) {
   }, [fieldName, registerField]);
 
   return (
-    <Container isFocused={isFocused}>
+    <Container isFocused={isFocused} isErrored={!!error}>
+      <Icon
+        name={icon}
+        size={20}
+        color={isFocused || isFilled ? "#ff9000" : "#666360"}
+      />
       <TextInput
         ref={inputElementRef}
         placeholderTextColor="#666360"
