@@ -27,6 +27,8 @@ import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
 import getValidationError from "../../utils/getValidationError";
 
+import { useAuth } from "../../hooks/AuthContext";
+
 interface SignInFomData {
   email: string;
   password: string;
@@ -34,42 +36,46 @@ interface SignInFomData {
 
 export function SignIn() {
   const { navigate } = useNavigation();
+  const { signIn, user } = useAuth();
+
+  console.log(user);
 
   const formRef = useRef<FormHandles>(null);
 
-  const handleSingIn = useCallback(async (data: SignInFomData) => {
-    try {
-      formRef.current?.setErrors({});
+  const handleSingIn = useCallback(
+    async (data: SignInFomData) => {
+      try {
+        formRef.current?.setErrors({});
 
-      const schema = Yup.object().shape({
-        email: Yup.string()
-          .required("E-mail é obrigatorio")
-          .email("Digite um e-mail válido"),
-        password: Yup.string().required("Senha obrigatoria"),
-      });
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .required("E-mail é obrigatorio")
+            .email("Digite um e-mail válido"),
+          password: Yup.string().required("Senha obrigatoria"),
+        });
 
-      await schema.validate(data, { abortEarly: false });
+        await schema.validate(data, { abortEarly: false });
 
-      /* await signIn({
+        await signIn({
           email: data.email,
           password: data.password,
-        }); */
+        });
+      } catch (err: any) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationError(err);
+          formRef.current?.setErrors(errors);
 
-      // navigate("/dashboard");
-    } catch (err: any) {
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationError(err);
-        formRef.current?.setErrors(errors);
+          return;
+        }
 
-        return;
+        Alert.alert(
+          "Erro na autenticação",
+          "Ocorreu um erro ao fazer login, cheque as credenciais"
+        );
       }
-
-      Alert.alert(
-        "Erro na autenticação",
-        "Ocorreu um erro ao fazer login, cheque as credenciais"
-      );
-    }
-  }, []);
+    },
+    [signIn]
+  );
 
   return (
     <>

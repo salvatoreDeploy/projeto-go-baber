@@ -1,13 +1,15 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "react-native";
 import { View } from "react-native";
-import { AuthRoutes } from "./src/routes";
+import { AuthRoutes } from "./src/routes/auth.routes";
 import {
   RobotoSlab_400Regular,
   RobotoSlab_500Medium,
   useFonts,
 } from "@expo-google-fonts/roboto-slab";
 import { Loading } from "./src/components/Loading";
+import { AppProvider } from "./src/hooks/index";
+import { Routes } from "./src/routes";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -26,9 +28,11 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      <View style={{ flex: 1, backgroundColor: "#312e38" }}>
-        <AuthRoutes />
-      </View>
+      <AppProvider>
+        <View style={{ flex: 1, backgroundColor: "#312e38" }}>
+          <Routes />
+        </View>
+      </AppProvider>
     </NavigationContainer>
   );
 }

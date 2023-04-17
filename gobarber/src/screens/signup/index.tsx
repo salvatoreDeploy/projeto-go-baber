@@ -19,6 +19,7 @@ import { Form } from "@unform/mobile";
 import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
 import getValidationError from "../../utils/getValidationError";
+import api from "../../services/api";
 
 interface SignUpFormData {
   name: string;
@@ -46,19 +47,28 @@ export function SignUp() {
 
       await schema.validate(data, { abortEarly: false });
 
-      // await api.post("users/createuser", data);
+      await api.post("/users/createuser", data);
 
-      // navigate("/");
+      console.log("try");
+
+      Alert.alert(
+        "Cadastro realizado com sucesso",
+        "Você ja pode realizar login na apliação"
+      );
+
+      goBack();
     } catch (err: any) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationError(err);
         formRef.current?.setErrors(errors);
 
+        console.log("catch");
+
         return;
       }
       Alert.alert(
-        "Cadastro Realizado com sucesso",
-        "Você ja pode realziar seu logon no GoBarber"
+        "Erro no cadastro",
+        "Ocorreu um erro ao fazer cadastro, tente novamente"
       );
     }
   }, []);
