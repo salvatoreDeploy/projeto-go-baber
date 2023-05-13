@@ -1,10 +1,7 @@
-import { UsersRepository } from "../../repositories/UsersRepository";
-import fs from "fs";
-import path from "path";
-import uploadConfig from "../../config/Upload";
-import { Users } from "@prisma/client";
-import { LocalStorageProvaider } from "../../provider/StorageProvaider/implementations/LocalStorageProvaider";
-import { AppError } from "../../error/AppError";
+import { UsersRepository } from "../../reporitories/UsersRepository";
+import { LocalStorageProvaider } from "../../../../provider/StorageProvaider/implementations/LocalStorageProvaider";
+import { AppError } from "../../../../shared/error/AppError";
+
 
 interface IRequest {
   user_id: string;

@@ -1,7 +1,8 @@
-import { UsersRepository } from "../../repositories/UsersRepository";
 import { hash } from "bcryptjs";
-import { AppError } from "../../error/AppError";
-import { ICreateUsersDTO } from "../../repositories/dtos/ICreateUsersDTO";
+import { ICreateUsersDTO } from "../../reporitories/dtos/ICreateUsersDTO";
+import { UsersRepository } from "../../reporitories/UsersRepository";
+import { AppError } from "../../../../shared/error/AppError";
+
 
 class CreateUsersUseCase {
   public async execute({ name, email, password }: ICreateUsersDTO) {

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { SessionsController } from "./useCase/SessionsUsecase/SessionsController";
+import { SessionsController } from "../../modules/users/useCase/SessionsUsecase/SessionsController";
 
 const sessionsController = new SessionsController();
 

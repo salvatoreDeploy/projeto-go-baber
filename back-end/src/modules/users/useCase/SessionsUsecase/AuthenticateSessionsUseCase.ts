@@ -1,9 +1,10 @@
-import { UsersRepository } from "../../repositories/UsersRepository";
 import { compare } from "bcryptjs";
-import { Users } from "@prisma/client";
-import { AppError } from "../../error/AppError";
 import { sign } from "jsonwebtoken";
-import { authConfig } from "../../config/Auth";
+import { UsersRepository } from "../../reporitories/UsersRepository";
+import { Users } from "@prisma/client";
+import { AppError } from "../../../../shared/error/AppError";
+import { authConfig } from "../../../../config/Auth";
+
 
 interface IRequest {
   email: string;

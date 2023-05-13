@@ -1,16 +1,16 @@
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
-import { AppError } from "./error/AppError";
 import "express-async-errors";
 import { routes } from "./routes";
-import upload from "../src/config/Upload";
+import Upload from "../../config/Upload";
+import { AppError } from "../error/AppError";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-routes.use("/files", express.static(upload.tmpFolder));
+routes.use("/files", express.static(Upload.tmpFolder));
 
 app.use(routes);
 

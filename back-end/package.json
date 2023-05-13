@@ -1,10 +1,10 @@
 {
-  "name": "goBarber",
+  "name": "gobarber",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --exit-child --transpile-only --ignore-watch node_modules src/server.ts"
+    "dev": "ts-node-dev --exit-child --transpile-only --ignore-watch node_modules src/shared/routes/server.ts"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",

@@ -1,7 +1,6 @@
 import { startOfHour } from "date-fns";
-import { AppError } from "../../error/AppError";
-import prismaClient from "../../prisma";
 import AppointmentsRepository from "../../repositories/AppointmentsRepository";
+import { AppError } from "../../../../shared/error/AppError";
 
 class CreateAppointmentsUseCase {
   async execute({ provider_id, date }: ICreateAppointmentsDTO) {

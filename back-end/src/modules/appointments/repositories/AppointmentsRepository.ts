@@ -1,5 +1,5 @@
 import { Appointments } from "@prisma/client";
-import prismaClient from "../prisma/index";
+import prismaClient from "../../../shared/prisma/index";
 
 class AppointmentsRepository {
   public async findByDate(date: Date): Promise<Appointments | null> {

@@ -1,5 +1,5 @@
 import { Users } from "@prisma/client";
-import prismaClient from "../prisma";
+import prismaClient from "../../../shared/prisma";
 import { ICreateUsersDTO } from "./dtos/ICreateUsersDTO";
 
 class UsersRepository {
@@ -13,7 +13,7 @@ class UsersRepository {
     return findEmailExists || null;
   }
 
-  public async findById(id: string): Promise<Users> {
+  public async findById(id: string): Promise<Users | null> {
     const findEmailExists = await prismaClient.users.findFirst({
       where: {
         id,
