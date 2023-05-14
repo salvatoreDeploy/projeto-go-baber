@@ -1,10 +1,12 @@
+import Upload from "@config/Upload";
+import { CreateUsersController } from "@modules/users/useCase/CreateUsersUseCase/CreateUsersController";
+import { ListUsersController } from "@modules/users/useCase/ListUsersUseCase/ListUsersController";
+import { UpdateAvatarUserController } from "@modules/users/useCase/UpdateAvatarUserUseCase/UpdateAvatarUserController";
+import { ensureAuthenticated } from "@modules/users/infra/http/middleware/ensureAuthenticated";
 import { Router } from "express";
 import multer from "multer";
-import { CreateUsersController } from "../../modules/users/useCase/CreateUsersUseCase/CreateUsersController";
-import { UpdateAvatarUserController } from "../../modules/users/useCase/UpdateAvatarUserUseCase/UpdateAvatarUserController";
-import { ListUsersController } from "../../modules/users/useCase/ListUsersUseCase/ListUsersController";
-import Upload from "../../config/Upload";
-import { ensureAuthenticated } from "../middleware/ensureAuthenticated";
+
+
 
 const createUsersController = new CreateUsersController();
 const updateAvatarUserController = new UpdateAvatarUserController();

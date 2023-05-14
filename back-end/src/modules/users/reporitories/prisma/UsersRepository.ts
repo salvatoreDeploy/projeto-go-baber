@@ -1,8 +1,9 @@
 import { Users } from "@prisma/client";
-import prismaClient from "../../../shared/prisma";
-import { ICreateUsersDTO } from "./dtos/ICreateUsersDTO";
+import { ICreateUsersDTO } from "../dtos/ICreateUsersDTO";
+import prismaClient from "@shared/infra/prisma";
+import { IUserRepository } from "../IUserRepository";
 
-class UsersRepository {
+class UsersRepository implements IUserRepository {
   public async findByEmail(email: string) {
     const findEmailExists = await prismaClient.users.findFirst({
       where: {

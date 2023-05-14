@@ -1,7 +1,9 @@
 import { Appointments } from "@prisma/client";
-import prismaClient from "../../../shared/prisma/index";
+import prismaClient from "@shared/infra/prisma";
+import { IAppointmentsRepository } from "./IAppointmentsRepository";
 
-class AppointmentsRepository {
+
+class AppointmentsRepository implements IAppointmentsRepository {
   public async findByDate(date: Date): Promise<Appointments | null> {
     const findAppointment = await prismaClient.appointments.findFirst({
       where: {

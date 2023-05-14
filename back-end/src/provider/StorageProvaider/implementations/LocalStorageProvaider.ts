@@ -1,20 +1,21 @@
 import fs from "fs";
 import { resolve } from "path";
-import upload from "../../../config/Upload";
 import { IStorageProvaider } from "../IStorageProvaider";
+import Upload from "@config/Upload";
+
 
 class LocalStorageProvaider implements IStorageProvaider {
   async save(file: string): Promise<string> {
     await fs.promises.rename(
-      resolve(upload.tmpFolder, file),
-      resolve(`${upload.tmpFolder}`, file)
+      resolve(Upload.tmpFolder, file),
+      resolve(`${Upload.tmpFolder}`, file)
     );
 
     return file;
   }
 
   async delete(file: string): Promise<void> {
-    const avatarFileName = resolve(`${upload.tmpFolder}`, file);
+    const avatarFileName = resolve(`${Upload.tmpFolder}`, file);
 
     try {
       await fs.promises.stat(avatarFileName);

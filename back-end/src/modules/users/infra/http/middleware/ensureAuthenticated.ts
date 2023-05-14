@@ -1,10 +1,10 @@
+import { authConfig } from "@config/Auth";
+import { AppError } from "@shared/error/AppError";
 import { NextFunction, Request, Response } from "express";
 import { decode, verify } from "jsonwebtoken";
-import { authConfig } from "../../config/Auth";
-import { AppError } from "../error/AppError";
 
 
-interface tokenPayload {
+interface ItokenPayload {
   iat: number;
   exp: number;
   sub: string;
@@ -34,7 +34,7 @@ function ensureAuthenticated(
 
     // Anexando a informação do usuario que esta fazendo a requisição
 
-    const { sub } = decoded as tokenPayload;
+    const { sub } = decoded as ItokenPayload;
 
     request.user = {
       id: sub,

@@ -1,7 +1,7 @@
+import { CreateAppointmentsController } from "@modules/appointments/useCase/CreateAppointmentsUseCase/CreateAppointmentsController";
+import { ListAppointmentsController } from "@modules/appointments/useCase/ListAppointmentsUseCase/ListAppointmentsController";
+import { ensureAuthenticated } from "@modules/users/infra/http/middleware/ensureAuthenticated";
 import { Router } from "express";
-import { ensureAuthenticated } from "../middleware/ensureAuthenticated";
-import { CreateAppointmentsController } from "../../modules/appointments/useCase/CreateAppointmentsUseCase/CreateAppointmentsController";
-import { ListAppointmentsController } from "../../modules/appointments/useCase/ListAppointmentsUseCase/ListAppointmentsController";
 
 
 const appointmentsRouter = Router();

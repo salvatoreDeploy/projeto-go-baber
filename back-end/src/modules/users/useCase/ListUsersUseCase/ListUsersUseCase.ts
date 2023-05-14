@@ -1,5 +1,6 @@
+import { UsersRepository } from "@modules/users/reporitories/UsersRepository";
 import { Users } from "@prisma/client";
-import { UsersRepository } from "../../reporitories/UsersRepository";
+
 
 class ListUsersUseCase {
   async execute(): Promise<Users[]> {

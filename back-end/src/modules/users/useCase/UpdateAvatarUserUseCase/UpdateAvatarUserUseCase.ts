@@ -1,6 +1,6 @@
-import { UsersRepository } from "../../reporitories/UsersRepository";
-import { LocalStorageProvaider } from "../../../../provider/StorageProvaider/implementations/LocalStorageProvaider";
-import { AppError } from "../../../../shared/error/AppError";
+import { UsersRepository } from "@modules/users/reporitories/UsersRepository";
+import { LocalStorageProvaider } from "@provider/StorageProvaider/implementations/LocalStorageProvaider";
+import { AppError } from "@shared/error/AppError";
 
 
 interface IRequest {

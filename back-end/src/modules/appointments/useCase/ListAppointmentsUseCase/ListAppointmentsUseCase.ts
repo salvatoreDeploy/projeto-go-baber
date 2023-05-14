@@ -1,5 +1,6 @@
+import AppointmentsRepository from "@modules/appointments/repositories/AppointmentsRepository";
 import { Appointments } from "@prisma/client";
-import AppointmentsRepository from "../../repositories/AppointmentsRepository";
+
 
 class ListAppointmentsUseCase {
   public async execute(): Promise<Appointments[]> {
