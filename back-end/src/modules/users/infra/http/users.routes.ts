@@ -6,8 +6,6 @@ import { ensureAuthenticated } from "@modules/users/infra/http/middleware/ensure
 import { Router } from "express";
 import multer from "multer";
 
-
-
 const createUsersController = new CreateUsersController();
 const updateAvatarUserController = new UpdateAvatarUserController();
 const listUsersController = new ListUsersController();

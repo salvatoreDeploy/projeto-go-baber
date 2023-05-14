@@ -1,12 +1,14 @@
-import { UsersRepository } from "@modules/users/reporitories/UsersRepository";
+import { IUserRepository } from "@modules/users/reporitories/IUserRepository";
 import { Users } from "@prisma/client";
 
 
 class ListUsersUseCase {
-  async execute(): Promise<Users[]> {
-    const usersRepository = new UsersRepository();
 
-    const users = await usersRepository.list();
+  constructor(private usersRepository: IUserRepository) { }
+
+  async execute(): Promise<Users[]> {
+
+    const users = await this.usersRepository.list();
 
     return users;
   }

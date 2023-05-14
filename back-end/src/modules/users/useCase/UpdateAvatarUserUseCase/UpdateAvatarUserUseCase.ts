@@ -1,19 +1,21 @@
-import { UsersRepository } from "@modules/users/reporitories/UsersRepository";
+import { IUserRepository } from "@modules/users/reporitories/IUserRepository";
 import { LocalStorageProvaider } from "@provider/StorageProvaider/implementations/LocalStorageProvaider";
 import { AppError } from "@shared/error/AppError";
 
 
 interface IRequest {
   user_id: string;
-  avatarFileName: string;
+  avatarFileName?: string;
 }
 
 class UpdateAvatarUserUseCase {
+
+  constructor(private usersRepository: IUserRepository) { }
+
   public async execute({ user_id, avatarFileName }: IRequest) {
-    const usersRepository = new UsersRepository();
     const storageProvaider = new LocalStorageProvaider();
 
-    const user = await usersRepository.findById(user_id);
+    const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
       throw new AppError("Only authenticated users can change avatar", 401);
@@ -23,11 +25,13 @@ class UpdateAvatarUserUseCase {
       await storageProvaider.delete(user.avatar);
     }
 
-    user.avatar = avatarFileName;
+    if (avatarFileName) {
+      user.avatar = avatarFileName;
 
-    await storageProvaider.save(avatarFileName);
+      await storageProvaider.save(avatarFileName);
 
-    await usersRepository.update({ user_id, avatar: avatarFileName });
+      await this.usersRepository.update({ user_id, avatar: avatarFileName });
+    }
 
     return user;
   }

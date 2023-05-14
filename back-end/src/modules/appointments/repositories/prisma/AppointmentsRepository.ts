@@ -1,11 +1,18 @@
-import { Appointments } from "@prisma/client";
+import { Appointments, PrismaClient } from "@prisma/client";
 import prismaClient from "@shared/infra/prisma";
-import { IAppointmentsRepository } from "./IAppointmentsRepository";
+import { IAppointmentsRepository } from "../IAppointmentsRepository";
 
 
 class AppointmentsRepository implements IAppointmentsRepository {
+
+  private ormPrisma: PrismaClient
+
+  constructor() {
+    this.ormPrisma = prismaClient
+  }
+
   public async findByDate(date: Date): Promise<Appointments | null> {
-    const findAppointment = await prismaClient.appointments.findFirst({
+    const findAppointment = await this.ormPrisma.appointments.findFirst({
       where: {
         date,
       },
@@ -18,7 +25,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
     provider_id,
     date,
   }: ICreateAppointmentsDTO): Promise<Appointments> {
-    const appointment = await prismaClient.appointments.create({
+    const appointment = await this.ormPrisma.appointments.create({
       data: {
         provider_id,
         date,
@@ -28,7 +35,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
   }
 
   public async list(): Promise<Appointments[]> {
-    const appointments = await prismaClient.appointments.findMany();
+    const appointments = await this.ormPrisma.appointments.findMany();
 
     return appointments;
   }

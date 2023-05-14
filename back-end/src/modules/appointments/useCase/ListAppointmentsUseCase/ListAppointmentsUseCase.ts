@@ -1,12 +1,14 @@
-import AppointmentsRepository from "@modules/appointments/repositories/AppointmentsRepository";
+import { IAppointmentsRepository } from "@modules/appointments/repositories/IAppointmentsRepository";
 import { Appointments } from "@prisma/client";
 
 
 class ListAppointmentsUseCase {
-  public async execute(): Promise<Appointments[]> {
-    const appointementsRepository = new AppointmentsRepository();
 
-    const appointements = await appointementsRepository.list();
+  constructor(private appointmentsRepository: IAppointmentsRepository) { }
+
+  public async execute(): Promise<Appointments[]> {
+
+    const appointements = await this.appointmentsRepository.list();
 
     return appointements;
   }

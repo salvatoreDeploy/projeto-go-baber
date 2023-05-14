@@ -1,15 +1,16 @@
-import AppointmentsRepository from "@modules/appointments/repositories/AppointmentsRepository";
+import { IAppointmentsRepository } from "@modules/appointments/repositories/IAppointmentsRepository";
 import { AppError } from "@shared/error/AppError";
 import { startOfHour } from "date-fns";
 
 
 class CreateAppointmentsUseCase {
+
+  constructor(private appointmentsRepository: IAppointmentsRepository) { }
+
   async execute({ provider_id, date }: ICreateAppointmentsDTO) {
     const appointmentDate = startOfHour(date);
 
-    const appointmentsRepository = new AppointmentsRepository();
-
-    const findAppointmentInSameDate = await appointmentsRepository.findByDate(
+    const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
       appointmentDate
     );
 
@@ -17,7 +18,7 @@ class CreateAppointmentsUseCase {
       throw new AppError("This appointment is already booked");
     }
 
-    const appointment = await appointmentsRepository.create({
+    const appointment = await this.appointmentsRepository.create({
       provider_id,
       date: appointmentDate,
     });

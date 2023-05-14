@@ -3,8 +3,7 @@ import { sign } from "jsonwebtoken";
 import { Users } from "@prisma/client";
 import { AppError } from "@shared/error/AppError";
 import { authConfig } from "@config/Auth";
-import { UsersRepository } from "@modules/users/reporitories/UsersRepository";
-
+import { IUserRepository } from "@modules/users/reporitories/IUserRepository";
 
 
 interface IRequest {
@@ -18,10 +17,12 @@ interface IResponse {
 }
 
 class AuthenticatesessionsUseCase {
-  public async execute({ email, password }: IRequest): Promise<IResponse> {
-    const usersRespository = new UsersRepository();
 
-    const user = await usersRespository.findByEmail(email);
+  constructor(private usersRepository: IUserRepository) { }
+
+  public async execute({ email, password }: IRequest): Promise<IResponse> {
+
+    const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
       throw new AppError("Email or Password incorrect!", 401);
