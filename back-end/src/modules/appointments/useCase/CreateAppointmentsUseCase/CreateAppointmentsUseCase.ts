@@ -1,11 +1,14 @@
+import "reflect-metadata"
 import { IAppointmentsRepository } from "@modules/appointments/repositories/IAppointmentsRepository";
 import { AppError } from "@shared/error/AppError";
 import { startOfHour } from "date-fns";
+import { inject, injectable } from "inversify";
 
-
+@injectable()
 class CreateAppointmentsUseCase {
-
-  constructor(private appointmentsRepository: IAppointmentsRepository) { }
+  constructor(
+    @inject("AppointmentsRepository")
+    private appointmentsRepository: IAppointmentsRepository) { }
 
   async execute({ provider_id, date }: ICreateAppointmentsDTO) {
     const appointmentDate = startOfHour(date);

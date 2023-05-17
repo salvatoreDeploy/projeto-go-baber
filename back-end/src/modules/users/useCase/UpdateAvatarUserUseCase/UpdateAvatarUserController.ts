@@ -1,16 +1,14 @@
 import { Request, Response } from "express";
 import { UpdateAvatarUserUseCase } from "./UpdateAvatarUserUseCase";
-import { UsersRepository } from "@modules/users/reporitories/prisma/UsersRepository";
+import { container } from "@shared/container";
 
 class UpdateAvatarUserController {
   async handle(request: Request, response: Response): Promise<Response> {
 
-    const userRepository = new UsersRepository()
-
     const { id } = request.user;
     const avatarFileName = request.file?.filename
 
-    const updateAvatarUser = new UpdateAvatarUserUseCase(userRepository);
+    const updateAvatarUser = container.resolve<UpdateAvatarUserUseCase>(UpdateAvatarUserUseCase);
 
     const result = await updateAvatarUser.execute({
       user_id: id,

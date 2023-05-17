@@ -1,13 +1,11 @@
 import { Request, Response } from "express";
 import { ListUsersUseCase } from "./ListUsersUseCase";
-import { UsersRepository } from "@modules/users/reporitories/prisma/UsersRepository";
+import { container } from "@shared/container";
 
 class ListUsersController {
   async handle(request: Request, response: Response) {
 
-    const userRepository = new UsersRepository()
-
-    const listUsersUseCase = new ListUsersUseCase(userRepository);
+    const listUsersUseCase = container.resolve<ListUsersUseCase>(ListUsersUseCase)
 
     const allUsers = await listUsersUseCase.execute();
 

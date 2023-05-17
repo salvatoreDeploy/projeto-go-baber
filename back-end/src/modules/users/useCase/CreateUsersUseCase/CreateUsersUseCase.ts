@@ -2,10 +2,14 @@ import { hash } from "bcryptjs";
 import { AppError } from "@shared/error/AppError";
 import { ICreateUsersDTO } from "@modules/users/reporitories/dtos/ICreateUsersDTO";
 import { IUserRepository } from "@modules/users/reporitories/IUserRepository";
+import { inject, injectable } from "inversify";
 
+@injectable()
 class CreateUsersUseCase {
 
-  constructor(private usersRepository: IUserRepository) { }
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUserRepository) { }
 
   public async execute({ name, email, password }: ICreateUsersDTO) {
 

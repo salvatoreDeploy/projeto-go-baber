@@ -1,8 +1,9 @@
 import { Appointments, PrismaClient } from "@prisma/client";
 import prismaClient from "@shared/infra/prisma";
 import { IAppointmentsRepository } from "../IAppointmentsRepository";
+import { injectable } from "inversify";
 
-
+@injectable()
 class AppointmentsRepository implements IAppointmentsRepository {
 
   private ormPrisma: PrismaClient
@@ -41,4 +42,4 @@ class AppointmentsRepository implements IAppointmentsRepository {
   }
 }
 
-export default AppointmentsRepository;
+export default AppointmentsRepository 
