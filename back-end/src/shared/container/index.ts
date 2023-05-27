@@ -12,7 +12,7 @@ import { UpdateAvatarUserUseCase } from '@modules/users/useCase/UpdateAvatarUser
 
 const container = new Container();
 
-/* Dependecie Injection Investify */
+/* Dependecy Injection Investify */
 
 /* Appointemnsts */
 
