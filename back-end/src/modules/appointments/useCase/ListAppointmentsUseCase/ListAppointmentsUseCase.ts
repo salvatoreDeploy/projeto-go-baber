@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { IAppointmentsRepository } from "@modules/appointments/repositories/IAppointmentsRepository";
 import { Appointments } from "@prisma/client";
 import { inject, injectable } from "inversify";

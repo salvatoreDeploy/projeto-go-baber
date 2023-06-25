@@ -1,6 +1,8 @@
+import 'reflect-metadata';
 import { Appointments } from "@prisma/client";
 import { IAppointmentsRepository } from "../IAppointmentsRepository";
 import { randomUUID } from 'node:crypto'
+import { isEqual } from 'date-fns';
 
 
 export class InMemoryAppointmentRepository implements IAppointmentsRepository {
@@ -9,7 +11,7 @@ export class InMemoryAppointmentRepository implements IAppointmentsRepository {
 
 
   async findByDate(date: Date) {
-    const appointment = this.appointments.find(appointment => appointment.date === date)
+    const appointment = this.appointments.find(appointment => isEqual(appointment.date, date))
 
     if (!appointment) {
       return null

@@ -6,7 +6,7 @@ import { Router } from "express";
 
 const appointmentsRouter = Router();
 
-appointmentsRouter.use(ensureAuthenticated);
+// appointmentsRouter.use(ensureAuthenticated);
 
 const createAppointmentsController = new CreateAppointmentsController();
 const listAppointmentsController = new ListAppointmentsController();
