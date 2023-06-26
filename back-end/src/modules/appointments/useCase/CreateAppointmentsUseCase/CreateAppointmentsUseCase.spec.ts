@@ -30,7 +30,7 @@ describe('Create Appointments Use Case', () => {
     vi.setSystemTime(new Date(2022, 0, 3, 2, 0, 0))
 
 
-    const a = await sut.execute({
+    await sut.execute({
       provider_id: 'provider-id-teste-01',
       date: new Date()
     })
