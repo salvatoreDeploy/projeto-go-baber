@@ -46,4 +46,24 @@ describe("Autheticate User Use Case", () => {
       sut.execute({ email: "johndoeteste@example.com", password: "teste" })
     ).rejects.toBeInstanceOf(AppError);
   });
+
+  it("Should not be able to authenticate with wrong password", async () => {
+    const createUserUseCase = new CreateUsersUseCase(
+      inMemoryUsersRepository,
+      fakeHashProvider
+    );
+
+    await createUserUseCase.execute({
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password: "123456",
+    });
+
+    const response = await expect(() =>
+      sut.execute({
+        email: "johndoe@example.com",
+        password: "wrong-password",
+      })
+    ).rejects.toBeInstanceOf(AppError);
+  });
 });
