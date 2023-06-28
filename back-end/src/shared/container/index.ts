@@ -11,6 +11,8 @@ import { AuthenticatesessionsUseCase } from "@modules/users/useCase/SessionsUsec
 import { UpdateAvatarUserUseCase } from "@modules/users/useCase/UpdateAvatarUserUseCase/UpdateAvatarUserUseCase";
 import IHashProvider from "@modules/users/providers/HashProvider/models/IHashProvider";
 import { BCryptProvider } from "@modules/users/providers/HashProvider/implementations/BCryptProvider";
+import { IStorageProvaider } from "@provider/StorageProvaider/models/IStorageProvaider";
+import { LocalStorageProvaider } from "@provider/StorageProvaider/implementations/LocalStorageProvaider";
 
 const container = new Container();
 
@@ -40,6 +42,12 @@ container.bind<ListUsersUseCase>(ListUsersUseCase).to(ListUsersUseCase);
 container
   .bind<AuthenticatesessionsUseCase>(AuthenticatesessionsUseCase)
   .to(AuthenticatesessionsUseCase);
+
+/* Upload Files */
+
+container
+  .bind<IStorageProvaider>("LocalStorageProvaider")
+  .to(LocalStorageProvaider);
 container
   .bind<UpdateAvatarUserUseCase>(UpdateAvatarUserUseCase)
   .to(UpdateAvatarUserUseCase);

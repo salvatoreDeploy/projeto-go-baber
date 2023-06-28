@@ -59,7 +59,7 @@ describe("Autheticate User Use Case", () => {
       password: "123456",
     });
 
-    const response = await expect(() =>
+    await expect(() =>
       sut.execute({
         email: "johndoe@example.com",
         password: "wrong-password",
